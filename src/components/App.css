@@ -9,8 +9,7 @@
 .App p:first-child {
   font-size: 24px;
 }
-.App input,
-.App button {
+.App input {
   margin: 20px;
   padding: 10px 20px;
   border: 2px solid #ddd;
@@ -18,9 +17,7 @@
   transition: 0.3s;
   font-size: 18px;
 }
-.App button:hover {
-  background-color: #aaa;
-  color: #fff;
-  cursor: pointer;
-  font-size: 18px;
+form {
+  border-bottom: 2px solid #ddd;
+  margin: 0 40px;
 }

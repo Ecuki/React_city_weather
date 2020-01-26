@@ -21,47 +21,79 @@ class App extends React.Component {
       value: e.target.value
     });
   };
-  handleCitySearch = e => {
-    e.preventDefault();
-    const API = `http://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&APPID=${APIKey}&units=metric`;
+  // handleCitySearch = e => {
+  //   e.preventDefault();
+  //   const API = `http://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&APPID=${APIKey}&units=metric`;
 
-    fetch(API)
-      .then(res => {
-        if (res.ok) {
-          return res;
-        }
-        throw Error("Nie udało się");
-      })
-      .then(res => res.json())
-      .then(json => {
-        const time = new Date().toLocaleString();
-        this.setState(prevState => ({
-          date: time,
-          city: prevState.value,
-          sunrise: json.sys.sunrise,
-          sunset: json.sys.sunset,
-          temp: json.main.temp,
-          pressure: json.main.pressure,
-          wind: json.wind.speed,
-          err: false
-        }));
-      })
-      .catch(err => {
-        console.log(err);
-        this.setState(prevState => ({
-          err: true,
-          city: prevState.value
-        }));
-      });
-  };
+  //   fetch(API)
+  //     .then(res => {
+  //       if (res.ok) {
+  //         return res;
+  //       }
+  //       throw Error("Nie udało się");
+  //     })
+  //     .then(res => res.json())
+  //     .then(json => {
+  //       const time = new Date().toLocaleString();
+  //       this.setState(prevState => ({
+  //         date: time,
+  //         city: prevState.value,
+  //         sunrise: json.sys.sunrise,
+  //         sunset: json.sys.sunset,
+  //         temp: json.main.temp,
+  //         pressure: json.main.pressure,
+  //         wind: json.wind.speed,
+  //         err: false
+  //       }));
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //       this.setState(prevState => ({
+  //         err: true,
+  //         city: prevState.value
+  //       }));
+  //     });
+  // };
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevState.value);
+    const cityName = [...this.state.value];
+    if (prevState.value !== this.state.value && cityName.length > 2) {
+      const API = `http://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&APPID=${APIKey}&units=metric`;
+
+      fetch(API)
+        .then(res => {
+          if (res.ok) {
+            return res;
+          }
+          throw Error("Nie udało się");
+        })
+        .then(res => res.json())
+        .then(json => {
+          const time = new Date().toLocaleString();
+          this.setState(prevState => ({
+            date: time,
+            city: prevState.value,
+            sunrise: json.sys.sunrise,
+            sunset: json.sys.sunset,
+            temp: json.main.temp,
+            pressure: json.main.pressure,
+            wind: json.wind.speed,
+            err: false
+          }));
+        })
+        .catch(err => {
+          console.log(err);
+          this.setState(prevState => ({
+            err: true,
+            city: prevState.value
+          }));
+        });
+    }
+  }
   render() {
     return (
       <div className="App">
-        <Form
-          value={this.state.value}
-          change={this.handleInputChange}
-          submit={this.handleCitySearch}
-        />
+        <Form value={this.state.value} change={this.handleInputChange} />
         <Result weather={this.state} />
       </div>
     );
