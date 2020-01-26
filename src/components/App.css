@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+  font-family: arial;
+  font-size: 18px;
+}
+.App p {
+  padding: 1em 0;
+}
+.App p:first-child {
+  font-size: 24px;
+}
+.App input,
+.App button {
+  margin: 20px;
+  padding: 10px 20px;
+  border: 2px solid #ddd;
+  background-color: #eee;
+  transition: 0.3s;
+  font-size: 18px;
+}
+.App button:hover {
+  background-color: #aaa;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+}
